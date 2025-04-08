@@ -13,3 +13,18 @@ class Transaction(TransactionCreate):
 
     class Config:
         orm_mode = True
+
+from pydantic import BaseModel
+from datetime import date
+
+class BlogPostCreate(BaseModel):
+    title: str
+    content: str
+    date: date
+
+class BlogPost(BlogPostCreate):
+    id: int
+
+    class Config:
+        orm_mode = True
+

@@ -36,3 +36,15 @@ def create_transaction(tx: schemas.TransactionCreate, db: Session = Depends(get_
 @app.get("/transactions", response_model=list[schemas.Transaction])
 def read_transactions(db: Session = Depends(get_db)):
     return db.query(models.Transaction).all()
+
+@app.post("/blog-posts", response_model=schemas.BlogPost)
+def create_blog_post(post: schemas.BlogPostCreate, db: Session = Depends(get_db)):
+    db_post = models.BlogPost(**post.dict())
+    db.add(db_post)
+    db.commit()
+    db.refresh(db_post)
+    return db_post
+
+@app.get("/blog-posts", response_model=list[schemas.BlogPost])
+def read_blog_posts(db: Session = Depends(get_db)):
+    return db.query(models.BlogPost).order_by(models.BlogPost.id.desc()).all()

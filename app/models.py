@@ -11,3 +11,14 @@ class Transaction(Base):
     type = Column(String)
     category = Column(String)
     comment = Column(String)
+
+from sqlalchemy import Column, Integer, String, Date
+
+class BlogPost(Base):
+    __tablename__ = "blog_posts"
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String, index=True)
+    content = Column(String)
+    date = Column(Date)
+
